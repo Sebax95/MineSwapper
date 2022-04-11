@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
@@ -17,6 +14,7 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private Vector2 offset;
 
+    [SerializeField]
     private int minesLimit;
 
     private GridView gridView;
@@ -47,11 +45,9 @@ public class Grid : MonoBehaviour
                 grid[x, y] = tile;
             }
         }
-        minesLimit = (width * height) / 5;
+        //minesLimit = (width * height) / 5;
         GenerateMines();
-        GenerateNumbers();
-        gridView.GenerateGrid(grid, spacing, offset);
-        HideAllTiles();
+       
         //DebugGrid();
     }
     
@@ -66,12 +62,21 @@ public class Grid : MonoBehaviour
     //algorith to generate the mines randomly
     private void GenerateMines()
     {
+        int m = 0;
         for (int i = 0; i < minesLimit; i++)
         {
-            int x = UnityEngine.Random.Range(0, width);
-            int y = UnityEngine.Random.Range(0, height);
+            if(minesLimit <= 0)
+                break;
+            int x = 0, y = 0;
+            do
+            {
+                x = UnityEngine.Random.Range(0, width);
+                y = UnityEngine.Random.Range(0, height);
+            } while (grid[x, y].mineType == MineType.MINE);
             grid[x, y].mineType = MineType.MINE;
+            m++;
         }
+        GenerateNumbers();
     }
     
     //generate the numbers of mines around the tiles
@@ -109,6 +114,8 @@ public class Grid : MonoBehaviour
                 }
             }
         }
+        gridView.GenerateGrid(grid, spacing, offset);
+        HideAllTiles();
     }
     
     public void HideTile(int x, int y) => gridView.HideTile(grid[x, y]);
@@ -156,6 +163,15 @@ public class Grid : MonoBehaviour
     {
         Debug.Log("Game Over");
         ShowAllTiles();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+        if (Input.GetKeyDown(KeyCode.R))
+            GenerateGrid();
+
     }
 
     private void OnDrawGizmos()

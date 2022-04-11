@@ -171,10 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -376,6 +376,7 @@ MonoBehaviour:
   height: 11
   spacing: {x: 90, y: 90}
   offset: {x: 50, y: 50}
+  minesLimit: 50
   tilePrefab: {fileID: 3367471271595454547, guid: 622d44e6b6de6da4482c08c6e3c6ed9b, type: 3}
   parent: {fileID: 714938796}
 --- !u!4 &1045393425

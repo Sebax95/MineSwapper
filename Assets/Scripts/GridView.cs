@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class GridView : MonoBehaviour
 { 
@@ -39,10 +36,12 @@ public class GridView : MonoBehaviour
                 text.text = "";
                 break;
             case MineType.NUMBER:
-                if(tile.MineCount <= 2)
+                if(tile.MineCount == 2)
                     text.color = Color.cyan;
-                else if(tile.MineCount <= 3)
+                else if(tile.MineCount > 3)
                     text.color = Color.red;
+                else
+                    text.color = Color.white;
                 text.text = tile.MineCount.ToString();
                 break;
             default:
@@ -98,10 +97,12 @@ public class GridView : MonoBehaviour
                         text.text = "";
                         break;
                     case MineType.NUMBER:
-                        if(tile.MineCount <= 2)
+                        if(tile.MineCount == 2)
                             text.color = Color.cyan;
-                        else if(tile.MineCount <= 3)
+                        else if(tile.MineCount >= 3)
                             text.color = Color.red;
+                        else
+                            text.color = Color.white;
                         text.text = tile.MineCount.ToString();
                         break;
                     default:
