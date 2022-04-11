@@ -70,8 +70,8 @@ public class Grid : MonoBehaviour
             int x = 0, y = 0;
             do
             {
-                x = UnityEngine.Random.Range(0, width);
-                y = UnityEngine.Random.Range(0, height);
+                x = Random.Range(0, width);
+                y = Random.Range(0, height);
             } while (grid[x, y].mineType == MineType.MINE);
             grid[x, y].mineType = MineType.MINE;
             m++;
@@ -144,17 +144,34 @@ public class Grid : MonoBehaviour
             {
                 if (x + i >= 0 && x + i < width && y + j >= 0 && y + j < height)
                 {
-                    if (grid[x + i, y + j].mineType == MineType.EMPTY && !grid[x + i, y + j].isShowed)
+                    if (grid[x + i, y + j].mineType == MineType.EMPTY && !grid[x + i, y + j].isShowed && !grid[x + i, y + j].isFlag)
                     {
                         grid[x + i, y + j].isShowed = true;
                         gridView.ShowTile(grid[x + i, y + j]);
-                        ClearEmptyTiles(x + i, y + j);
+                        if (grid[x + i, y + j].MineCount == 0)
+                            ClearEmptyTiles(x + i, y + j);
                     }
                 }
             }
         }
     }
 
+    //detect when the player win the game
+    public bool CheckWin()
+    {
+        int mines = 0;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y].mineType == MineType.MINE && grid[x, y].isFlag)
+                    mines++;
+            }
+        }
+        return mines == minesLimit;
+    }
+    
+    
     public void ShowTile(int x, int y) => gridView.ShowTile(grid[x, y],false);
 
     public void ShowAllTiles() => gridView.ShowAllTiles(grid);
@@ -164,7 +181,13 @@ public class Grid : MonoBehaviour
         Debug.Log("Game Over");
         ShowAllTiles();
     }
-
+    
+    public void Win()
+    {
+        ShowAllTiles();
+        Debug.Log("You Win");
+    }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -179,6 +202,6 @@ public class Grid : MonoBehaviour
         Gizmos.color = Color.green;
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                Gizmos.DrawWireCube(new Vector3(x, y, 0) * spacing + offset, new Vector3(spacing.x, spacing.y, 1));
+                Gizmos.DrawWireCube(new Vector3(x * (width / 15), y * (height / 6), 0) * spacing + offset , new Vector3(offset.x, offset.y, 1));
     }
 }

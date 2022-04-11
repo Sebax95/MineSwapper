@@ -31,6 +31,7 @@ public class Tiles : MonoBehaviour, IPointerClickHandler
         this.x = x;
         this.y = y;
         isShowed = false;
+        isFlag = false;
     }
 
     public void Initialize(int x, int y)
@@ -65,6 +66,8 @@ public class Tiles : MonoBehaviour, IPointerClickHandler
                 }
                 break;
         }
+        if(Grid.Instance.CheckWin())
+            Grid.Instance.Win();
     }
 }
 

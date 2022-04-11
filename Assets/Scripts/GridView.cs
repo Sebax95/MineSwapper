@@ -65,6 +65,7 @@ public class GridView : MonoBehaviour
         tile.isFlag = true;
         tile.GetComponent<Image>().color = Color.yellow;
         tile.GetComponentInChildren<TextMeshProUGUI>().text = "F";
+        tile.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
     }
 
     public void SetNormal(Tiles tile)
@@ -90,13 +91,14 @@ public class GridView : MonoBehaviour
                 var text = tile.gameObject.GetComponentInChildren<TextMeshProUGUI>();
                 switch (tile.mineType)
                 {
-                    case MineType.MINE:
+                    case MineType.MINE: 
                         text.text = "M";
                         break;
                     case MineType.EMPTY:
                         text.text = "";
                         break;
                     case MineType.NUMBER:
+                        tile.GetComponent<Image>().color = Color.black;
                         if(tile.MineCount == 2)
                             text.color = Color.cyan;
                         else if(tile.MineCount >= 3)
